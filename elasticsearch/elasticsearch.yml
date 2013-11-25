@@ -1,0 +1,10 @@
+---
+cluster:
+    name: logstash
+
+## don't set node.name; let it be dynamic so we can cluster
+#node:
+#    name: docker
+
+bootstrap:
+    mlockall: true
