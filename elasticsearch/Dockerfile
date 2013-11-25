@@ -1,4 +1,4 @@
-FROM centos
+FROM blalor/centos:java
 MAINTAINER Brian Lalor <blalor@bravo5.org>
 
 ## the volume mapped to this location needs to be writable by the elasticsearch
@@ -7,39 +7,21 @@ MAINTAINER Brian Lalor <blalor@bravo5.org>
 VOLUME ["/var/lib/elasticsearch"]
 EXPOSE 9200 9300
 
-RUN echo "NETWORKING=yes" > /etc/sysconfig/network
-
-## remove default upstart stuff that isn't needed.  tty.conf respawns a process
-## that always fails.
-RUN rm -f \
-    /etc/init/tty.conf \
-    /etc/init/start-ttys.conf \
-    /etc/init/control-alt-delete.conf \
-    /etc/init/plymouth-shutdown.conf \
-    /etc/init/quit-plymouth.conf \
-    /etc/init/prefdm.conf \
-    /etc/init/serial.conf \
-    /etc/init/splash-manager.conf
-
-## basic packages. cronie requires /usr/sbin/sendmail, and I've observed both
-## sendmail and postfix being installed as a dependency.  Specify it explicitly
-## and suppress the service
-RUN yum -y install java-1.7.0-openjdk which cronie logrotate postfix
-RUN chkconfig postfix off
+RUN yum -y localinstall --nogpgcheck \
+    https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.7.noarch.rpm
 
 ADD elasticsearch-logrotate.conf /etc/logrotate.d/elasticsearch
 ADD elasticsearch-logging.yml /etc/elasticsearch/logging.yml
 ADD elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 
-ADD es.rpm /tmp/es.rpm
-RUN yum -y localinstall --nogpgcheck /tmp/es.rpm
+## templates
+ADD templates/ /etc/elasticsearch/templates/
 
 ## cleanup
-RUN yum clean all
-RUN rm -rf /var/tmp/yum-root* /tmp/es.rpm
+RUN yum clean all && rm -rf /var/tmp/yum-root*
 
 ADD launch.sh /launch.sh
 
-RUN date -u >> /.docker
+RUN (echo -n "blalor/elasticsearch " ; date -u) >> /.docker
 
 CMD ["/launch.sh"]

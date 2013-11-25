@@ -1,0 +1,35 @@
+{
+    "logstash_template": {
+        "template": "logstash*",
+        "settings": {
+            "index.query.default_field": "message",
+            "index.cache.field.type": "soft",
+            "index.store.compress.stored": true,
+            "number_of_shards": 1,
+            "number_of_replicas": 1
+        },
+        "mappings": {
+            "_default_": {
+                "_source": {
+                    "compress": true
+                },
+                "_all": {
+                    "enabled": false
+                },
+                "dynamic_templates": [
+                    {
+                        "my_default_template": {
+                            "path_match": "*",
+                            "mapping": { "type": "string", "index": "not_analyzed" }
+                        }
+                    }
+                ],
+                "properties": {
+                    "@timestamp": { "type": "date",   "index": "not_analyzed"},
+                    "date":       { "type": "date",   "index": "not_analyzed"},
+                    "message":    { "type": "string", "index": "analyzed"}
+                }
+            }
+        }
+    }
+}
