@@ -17,10 +17,15 @@ if [ -z "${ES_PORT_9200_TCP_ADDR}" ] || [ -z "${ES_PORT_9200_TCP_PORT}" ]; then
 fi
 
 ## set the host and port for elasticsearch. MUST BE VISIBLE TO THE BROWSER!!
-sed \
-    -e "s#@@ES_HOST@@#${ES_PORT_9200_TCP_ADDR}#g" \
-    -e "s#@@ES_PORT@@#${ES_PORT_9200_TCP_PORT}#g" \
-    < /etc/logstash.conf.in > /etc/logstash.conf
+find /etc/logstash/templates -type f | while read src; do
+    dest="/etc/logstash/conf/$( basename ${src} )"
+    
+    sed \
+        -e "s#@@ES_HOST@@#${ES_PORT_9200_TCP_ADDR}#g" \
+        -e "s#@@ES_PORT@@#${ES_PORT_9200_TCP_PORT}#g" \
+        < "${src}" \
+        > "${dest}"
+done
 
 [ -d /logstash/sincedb ] || mkdir /logstash/sincedb
 
@@ -28,4 +33,4 @@ exec java \
     ${JAVA_OPTS} \
     -jar /usr/share/logstash/logstash.jar \
     agent \
-    --config /etc/logstash.conf
+    --config /etc/logstash/conf/

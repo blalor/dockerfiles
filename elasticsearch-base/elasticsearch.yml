@@ -1,5 +1,6 @@
 ---
 cluster:
+    ## @todo make cluster.name configurable
     name: logstash
 
 ## don't set node.name; let it be dynamic so we can cluster
