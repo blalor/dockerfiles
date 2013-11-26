@@ -19,9 +19,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   vb.customize ["modifyvm", :id, "--memory", "1024"]
   # end
   
-  config.vm.provision :shell, :inline => "curl http://get.docker.io/gpg | apt-key add -"
-  config.vm.provision :shell, :inline => "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
-  config.vm.provision :shell, :inline => "apt-get update"
-  config.vm.provision :shell, :inline => "su -c 'apt-get -y install linux-image-extra-`uname -r`'"
-  config.vm.provision :shell, :inline => "apt-get -y install lxc-docker"
+    
+  config.vm.provision :shell, path: "bootstrap.sh"
 end
