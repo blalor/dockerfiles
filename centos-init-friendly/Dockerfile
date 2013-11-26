@@ -22,4 +22,4 @@ RUN rm -f \
     /etc/init/serial.conf \
     /etc/init/splash-manager.conf
 
-RUN (echo -n "blalor/centos:init-friendly " ; date -u) >> /.docker
+RUN (echo -n "blalor/centos:init-friendly" ; date -u) >> /.docker

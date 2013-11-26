@@ -12,6 +12,6 @@ RUN tar -xz --strip-components=1 -C /var/www/html/ -f /tmp/kibana.tgz
 ADD launch.sh /launch.sh
 
 RUN yum clean all && rm -rf /var/tmp/yum-root* /tmp/kibana.tgz
-RUN (echo -n "blalor/kibana " ; date -u) >> /.docker
+RUN (echo -n "blalor/kibana" ; date -u) >> /.docker
 
 CMD ["/launch.sh"]
