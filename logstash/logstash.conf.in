@@ -1,0 +1,16 @@
+input {
+    file {
+        type           => "email"
+        path           => "/logstash/incoming/email*.json"
+        sincedb_path   => "/logstash/sincedb/email"
+        codec          => json {}
+        start_position => "beginning"
+    }
+}
+
+output {
+    elasticsearch_http {
+        host => "@@ES_HOST@@"
+        port => @@ES_PORT@@
+    }
+}

@@ -1,17 +1,14 @@
-FROM centos
+FROM blalor/centos:java
 MAINTAINER Brian Lalor <blalor@bravo5.org>
 
-EXPOSE 80
+VOLUME ["/logstash"]
 
-ADD https://download.elasticsearch.org/kibana/kibana/kibana-3.0.0milestone4.tar.gz /tmp/kibana.tgz
-RUN tar -xz --strip-components=1 -C /var/www/html/ -f /tmp/kibana-3.0.0milestone4.tar.gz
-
-RUN yum -y install httpd
-RUN chkconfig httpd on
+ADD https://download.elasticsearch.org/logstash/logstash/logstash-1.2.2-flatjar.jar /usr/share/logstash/logstash.jar
+ADD logstash.conf.in /etc/
 
 ADD launch.sh /launch.sh
 
-RUN yum clean all && rm -rf /var/tmp/yum-root* /tmp/kibana.tgz
+## RUN yum clean all && rm -rf /var/tmp/yum-root*
 RUN (echo -n "blalor/logstash " ; date -u) >> /.docker
 
 CMD ["/launch.sh"]
