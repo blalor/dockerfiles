@@ -26,7 +26,6 @@
                 ],
                 "properties": {
                     "@timestamp": { "type": "date",   "index": "not_analyzed"},
-                    "date":       { "type": "date",   "index": "not_analyzed"},
                     "message":    { "type": "string", "index": "analyzed"}
                 }
             }
