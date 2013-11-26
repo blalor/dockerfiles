@@ -10,3 +10,6 @@ The Kibana and Elasticsearch images are CentOS-based and delegate to
 exit cleanly on a `docker stop`, but it means you don't have to reinvent the
 wheel when using distribution-provided packages that have init.d service
 scripts.
+
+* `build_all.sh` will build the entire stack
+* `start_all.sh` will start the entire stack (but only once!)

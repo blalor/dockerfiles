@@ -18,7 +18,9 @@ Logstash config reads logs from `/logstash/incoming/` and stores its sincedb in
 
 ## building
 
-    docker build -t blalor/logstash .
+    docker build -t blalor/logstash:private .
+
+`build_all.sh` in the root of this project will build the entire stack.
 
 ## invocation
 
@@ -39,3 +41,6 @@ Now, fire up this Logstash container:
         blalor/logstash:private
 
 You can tweak `JAVA_OPTS` as necessary.
+
+`start_all.sh` in the root of this project will start the entire
+Logstash/Elasticsearch/Kibana stack.
