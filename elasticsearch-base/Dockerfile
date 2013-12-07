@@ -1,4 +1,4 @@
-FROM blalor/centos:java
+FROM blalor/java:1.7.0
 MAINTAINER Brian Lalor <blalor@bravo5.org>
 
 ## the volume mapped to this location needs to be writable by the elasticsearch
@@ -19,6 +19,6 @@ RUN yum clean all && rm -rf /var/tmp/yum-root*
 
 ADD launch.sh /launch.sh
 
-RUN (echo -n "blalor/elasticsearch:base" ; date -u) >> /.docker
+RUN (echo -n "blalor/elasticsearch:0.90.7" ; date -u) >> /.docker
 
 CMD ["/launch.sh"]
