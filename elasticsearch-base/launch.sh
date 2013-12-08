@@ -15,7 +15,16 @@ env | egrep -v '^(HOSTNAME|TERM|PATH|PWD|SHLVL|HOME|container|_)=' | awk -F= '{p
     fi
 done
 
-## set ownership on /var/lib/elasticsearch
-chown -R elasticsearch:elasticsearch /var/lib/elasticsearch
+. /etc/sysconfig/elasticsearch
 
-exec /sbin/init
+## set ownership on /var/lib/elasticsearch
+chown -R ${ES_USER}:${ES_USER} ${DATA_DIR}
+
+_launch_cmd="/usr/share/elasticsearch/bin/elasticsearch -f"
+_launch_cmd="${_launch_cmd} -Des.default.path.home=${ES_HOME}"
+_launch_cmd="${_launch_cmd} -Des.default.path.logs=${LOG_DIR}"
+_launch_cmd="${_launch_cmd} -Des.default.path.data=${DATA_DIR}"
+_launch_cmd="${_launch_cmd} -Des.default.path.work=${WORK_DIR}"
+_launch_cmd="${_launch_cmd} -Des.default.path.conf=${CONF_DIR}"
+
+exec runuser -s /bin/bash ${ES_USER} -c "${_launch_cmd}"
