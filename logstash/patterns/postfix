@@ -1,3 +1,5 @@
 ## http://activedeveloper.info/a-thing-or-two-about-postfix-log-analysis.html
 
-POSTFIX_QUEUEID \h{7,11}
+POSTFIX_QUEUEID \h{7,11}|NOQUEUE
+
+HOSTNAME_REMOTE_IP %{HOSTNAME:hostname}\[%{IP:rip}\]
