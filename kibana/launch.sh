@@ -19,4 +19,4 @@ fi
 ## set the host and port for elasticsearch. MUST BE VISIBLE TO THE BROWSER!!
 sed -i -r -e "s#(elasticsearch: \").*(\",)#\1http://${ES_HOST}:${ES_PORT}\2#" /var/www/html/config.js
 
-exec /sbin/init
+exec /usr/sbin/httpd -D FOREGROUND
