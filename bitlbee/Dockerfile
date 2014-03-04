@@ -1,4 +1,4 @@
-FROM blalor/centos-supervised
+FROM blalor/supervised
 
 RUN yum install -y bitlbee && \
     sed -i -e '/User /s/^# //g' /etc/bitlbee/bitlbee.conf
