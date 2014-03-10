@@ -1,0 +1,6 @@
+{
+    "paths": [
+        "/var/lib/znc/moddata/adminlog/znc.log"
+    ],
+    "type": "znc-adminlog"
+}
