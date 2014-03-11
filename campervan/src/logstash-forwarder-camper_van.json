@@ -1,6 +1,0 @@
-{
-    "paths": [
-        "/var/log/camper_van.log"
-    ],
-    "type": "camper_van"
-}
